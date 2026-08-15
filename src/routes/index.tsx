@@ -1,21 +1,37 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { SiteHeader } from "@/components/SiteHeader";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Blade Tiers — Minecraft PvP Tier Rankings" },
+      {
+        name: "description",
+        content:
+          "Blade Tiers ranks Minecraft PvP players across kits with live tier lists, player search and community Discords.",
+      },
+      { property: "og:title", content: "Blade Tiers — Minecraft PvP Tier Rankings" },
+      {
+        property: "og:description",
+        content: "Live Minecraft PvP tier rankings, player search and community Discords.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-background">
+      <SiteHeader />
+      <main className="mx-auto max-w-7xl px-4 py-24">
+        <h1 className="text-4xl font-extrabold tracking-tight text-foreground">Blade Tiers</h1>
+        <p className="mt-3 max-w-xl text-muted-foreground">
+          Tell me what to build next and this page will fill in.
+        </p>
+      </main>
     </div>
   );
 }
