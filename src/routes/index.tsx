@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
+import { KitTabs } from "@/components/KitTabs";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -26,11 +27,9 @@ function Index() {
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
-      <main className="mx-auto max-w-7xl px-4 py-24">
-        <h1 className="text-4xl font-extrabold tracking-tight text-foreground">Blade Tiers</h1>
-        <p className="mt-3 max-w-xl text-muted-foreground">
-          Tell me what to build next and this page will fill in.
-        </p>
+      <main className="py-10">
+        <h1 className="sr-only">Blade Tiers Minecraft PvP rankings</h1>
+        <KitTabs />
       </main>
     </div>
   );
