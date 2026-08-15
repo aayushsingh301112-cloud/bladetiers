@@ -2,16 +2,16 @@ import { useState } from "react";
 import { Trophy, Swords, Gem, Heart, FlaskConical, CircleDot, Sword, Axe, Hammer } from "lucide-react";
 
 const kits = [
-  { label: "Overall", icon: Trophy, color: "text-chart-4" },
-  { label: "LTMs", icon: Swords, color: "text-muted-foreground" },
-  { label: "Vanilla", icon: Gem, color: "text-chart-4" },
-  { label: "UHC", icon: Heart, color: "text-destructive" },
-  { label: "Pot", icon: FlaskConical, color: "text-foreground" },
-  { label: "NethOP", icon: CircleDot, color: "text-chart-4" },
-  { label: "SMP", icon: CircleDot, color: "text-chart-2" },
-  { label: "Sword", icon: Sword, color: "text-chart-3" },
-  { label: "Axe", icon: Axe, color: "text-chart-3" },
-  { label: "Mace", icon: Hammer, color: "text-muted-foreground" },
+  { label: "Overall", icon: Trophy, color: "text-kit-gold" },
+  { label: "LTMs", icon: Swords, color: "text-kit-silver" },
+  { label: "Vanilla", icon: Gem, color: "text-kit-violet" },
+  { label: "UHC", icon: Heart, color: "text-kit-red" },
+  { label: "Pot", icon: FlaskConical, color: "text-kit-silver" },
+  { label: "NethOP", icon: CircleDot, color: "text-kit-violet" },
+  { label: "SMP", icon: CircleDot, color: "text-kit-teal" },
+  { label: "Sword", icon: Sword, color: "text-kit-blue" },
+  { label: "Axe", icon: Axe, color: "text-kit-blue" },
+  { label: "Mace", icon: Hammer, color: "text-kit-silver" },
 ];
 
 export function KitTabs() {
