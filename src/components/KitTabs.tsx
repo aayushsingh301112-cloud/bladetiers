@@ -32,7 +32,13 @@ export function KitTabs() {
                   : "border-transparent bg-card/40 text-muted-foreground hover:text-foreground"
               }`}
             >
-              <Icon className={`h-5 w-5 ${color} ${isActive ? "" : "opacity-80"}`} />
+              <Icon
+                className={`h-5 w-5 ${color} ${isActive ? "" : "opacity-80"}`}
+                strokeWidth={2.25}
+                fill={["Vanilla", "UHC", "NethOP", "SMP", "Overall"].includes(label)
+                  ? "currentColor"
+                  : "none"}
+              />
               <span className="text-sm font-semibold">{label}</span>
               {isActive ? (
                 <span className="absolute inset-x-4 bottom-0 h-0.5 rounded-full bg-foreground" />
