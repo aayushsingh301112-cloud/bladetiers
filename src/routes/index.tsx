@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
+import { KitTabs } from "@/components/KitTabs";
 
 export const Route = createFileRoute("/")({
   head: () => ({
