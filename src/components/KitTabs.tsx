@@ -1,31 +1,20 @@
 import { useState } from "react";
-import { Trophy, Swords, Gem, Heart, FlaskConical, CircleDot, Sword, Axe, Hammer } from "lucide-react";
 
-const kits = [
-  { label: "Overall", icon: Trophy, color: "text-kit-gold" },
-  { label: "LTMs", icon: Swords, color: "text-kit-silver" },
-  { label: "Vanilla", icon: Gem, color: "text-kit-violet" },
-  { label: "UHC", icon: Heart, color: "text-kit-red" },
-  { label: "Pot", icon: FlaskConical, color: "text-kit-silver" },
-  { label: "NethOP", icon: CircleDot, color: "text-kit-violet" },
-  { label: "SMP", icon: CircleDot, color: "text-kit-teal" },
-  { label: "Sword", icon: Sword, color: "text-kit-blue" },
-  { label: "Axe", icon: Axe, color: "text-kit-blue" },
-  { label: "Mace", icon: Hammer, color: "text-kit-silver" },
-];
+import { Leaderboard } from "@/components/Leaderboard";
+import { KITS } from "@/lib/kits";
 
 export function KitTabs() {
-  const [active, setActive] = useState("Overall");
+  const [active, setActive] = useState("overall");
 
   return (
     <section className="mx-auto max-w-7xl px-4">
       <div className="flex flex-wrap gap-1">
-        {kits.map(({ label, icon: Icon, color }) => {
-          const isActive = label === active;
+        {KITS.map(({ key, label, icon: Icon, color, filled }) => {
+          const isActive = key === active;
           return (
             <button
-              key={label}
-              onClick={() => setActive(label)}
+              key={key}
+              onClick={() => setActive(key)}
               className={`relative flex min-w-[6.5rem] flex-col items-center gap-1.5 rounded-t-xl border border-b-0 px-4 py-3 transition-colors ${
                 isActive
                   ? "border-border bg-card text-foreground"
@@ -35,9 +24,7 @@ export function KitTabs() {
               <Icon
                 className={`h-5 w-5 ${color} ${isActive ? "" : "opacity-80"}`}
                 strokeWidth={2.25}
-                fill={["Vanilla", "UHC", "NethOP", "SMP", "Overall"].includes(label)
-                  ? "currentColor"
-                  : "none"}
+                fill={filled ? "currentColor" : "none"}
               />
               <span className="text-sm font-semibold">{label}</span>
               {isActive ? (
@@ -78,6 +65,8 @@ export function KitTabs() {
           <span className="text-right">REGION</span>
           <span className="text-right">TIERS</span>
         </div>
+
+        <Leaderboard kitKey={active} />
       </div>
     </section>
   );
