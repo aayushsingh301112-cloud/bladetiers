@@ -71,6 +71,12 @@ export function normalizePlayer(raw: RawPlayer): Player | null {
     name,
     region: str(raw["region"])?.toUpperCase() ?? null,
     skin: str(raw["skin"]) ?? str(raw["skin_url"]) ?? str(raw["skinUrl"]),
+    skinTexture:
+      str(raw["skin_original"]) ??
+      str(raw["skinOriginal"]) ??
+      str(raw["skin_texture"]) ??
+      str(raw["skinTexture"]) ??
+      str(raw["texture"]),
     points,
     title: str(raw["title"]),
     tiers: normalizeTiers(raw),
