@@ -13,6 +13,7 @@ const HEIGHT = 420;
 
 const cache = new Map<string, string>();
 const inflight = new Map<string, Promise<string>>();
+let queue: Promise<unknown> = Promise.resolve();
 
 type Viewer = {
   loadSkin: (src: string, opts?: { model?: "default" | "slim" | "auto-detect" }) => Promise<void>;
