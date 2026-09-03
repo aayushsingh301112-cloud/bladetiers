@@ -31,6 +31,7 @@ export const Route = createFileRoute("/api/public/players")({
           const players = sortPlayers(normalizePlayers(await res.json())).map((p) => ({
             ...p,
             skin: absolutize(p.skin, upstream),
+            skinTexture: absolutize(p.skinTexture, upstream),
           }));
 
           return Response.json(
