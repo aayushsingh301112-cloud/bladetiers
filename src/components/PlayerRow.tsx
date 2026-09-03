@@ -21,13 +21,12 @@ export function PlayerRow({ player, rank }: { player: Player; rank: number }) {
         >
           {rank}.
         </span>
-        {player.skin ? (
-          <img
-            src={player.skin}
-            alt={`${player.name} Minecraft skin`}
-            loading="lazy"
-            className="ml-2 h-14 w-auto object-contain"
-            style={{ imageRendering: "pixelated" }}
+        {player.skinTexture || player.skin ? (
+          <MinecraftPlayer
+            skinUrl={player.skinTexture}
+            fallbackUrl={player.skin}
+            name={player.name}
+            className="ml-2 h-[4.25rem] w-auto -translate-y-0.5 object-contain"
           />
         ) : null}
         <span
