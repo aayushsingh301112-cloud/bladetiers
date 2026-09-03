@@ -14,14 +14,9 @@ export const Route = createFileRoute("/api/public/players")({
   server: {
     handlers: {
       GET: async () => {
-        const upstream = process.env["PLAYERS_API_URL"];
+        const upstream =
+          process.env["PLAYERS_API_URL"] ?? "https://api.ticknodes.dpdns.org/api/players";
 
-        if (!upstream) {
-          return Response.json(
-            { players: [], configured: false },
-            { headers: { "cache-control": "no-store" } },
-          );
-        }
 
         try {
           const res = await fetch(upstream, {
