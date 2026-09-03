@@ -5,8 +5,9 @@ import { normalizePlayers, sortPlayers } from "@/lib/players";
 /**
  * Thin read-only proxy in front of the Discord bot's players API.
  *
- * The upstream URL lives in the `PLAYERS_API_URL` server secret, so the VPS
- * host is never exposed to the browser and CORS is never an issue.
+ * The upstream URL lives in the `PLAYERS_API_URL` server secret.
+ * Player skins are served directly from the upstream (it sets CORS headers),
+ * so the 3D renderer can load the original 64x64 texture without a proxy.
  * Nothing here uses AI: it is a plain JSON fetch.
  */
 export const Route = createFileRoute("/api/public/players")({
