@@ -12,6 +12,8 @@ export type Player = {
   region: string | null;
   /** absolute or root-relative URL of the website-ready (transparent) skin render */
   skin: string | null;
+  /** raw uploaded Minecraft skin texture (64x64/64x32) used for 3D rendering */
+  skinTexture: string | null;
   /** overall points, optional */
   points: number | null;
   /** combat title, e.g. "Combat Grandmaster" — optional */
@@ -69,6 +71,12 @@ export function normalizePlayer(raw: RawPlayer): Player | null {
     name,
     region: str(raw["region"])?.toUpperCase() ?? null,
     skin: str(raw["skin"]) ?? str(raw["skin_url"]) ?? str(raw["skinUrl"]),
+    skinTexture:
+      str(raw["skin_original"]) ??
+      str(raw["skinOriginal"]) ??
+      str(raw["skin_texture"]) ??
+      str(raw["skinTexture"]) ??
+      str(raw["texture"]),
     points,
     title: str(raw["title"]),
     tiers: normalizeTiers(raw),

@@ -58,3 +58,14 @@ Set the `PLAYERS_API_URL` secret in this Lovable project to the public URL of
 `/api/players` (e.g. `https://api.chocomc.fun/api/players`). The website's
 `/api/public/players` route proxies it server-side, so the VPS host stays
 private and there are no CORS issues.
+
+## 5. Original skins for the 3D renderer
+
+The website now renders a real 3D Minecraft model (skinview3d/three.js) from the
+**original uploaded skin texture**, so the API must expose it:
+
+- `GET /skins/<Username>.png` → the raw 64x64 (or 64x32) upload
+- each player object gains `"skin_original": "/skins/<Username>.png"`
+
+`players_api.py` already does both; point `SKIN_DIR` at the bot's existing skin
+folder (default `skins/`). The generated `skin_website/*.png` stays as a fallback.

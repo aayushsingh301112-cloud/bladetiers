@@ -27,6 +27,8 @@ from flask import Flask, jsonify, send_from_directory
 # Point these at the bot's existing storage — do not duplicate it.
 PLAYERS_FILE = os.environ.get("PLAYERS_FILE", "data/players.json")
 SKIN_WEBSITE_DIR = os.environ.get("SKIN_WEBSITE_DIR", "skin_website")
+# Original uploaded 64x64 skin textures (used by the website's 3D renderer).
+SKIN_DIR = os.environ.get("SKIN_DIR", "skins")
 
 SAFE_NAME = re.compile(r"^[A-Za-z0-9_]{1,16}$")
 
@@ -56,7 +58,10 @@ def public_view(p: dict) -> dict | None:
     }
 
     skin_file = os.path.join(SKIN_WEBSITE_DIR, f"{name}.png")
+    original_file = os.path.join(SKIN_DIR, f"{name}.png")
     return {
+        # Raw Minecraft texture -> rendered as a real 3D model on the website.
+        "skin_original": f"/skins/{name}.png" if os.path.exists(original_file) else None,
         "name": name,
         "region": (p.get("region") or None),
         "skin": f"/skin_website/{name}.png" if os.path.exists(skin_file) else None,
@@ -64,6 +69,13 @@ def public_view(p: dict) -> dict | None:
         "title": p.get("title"),
         "tiers": tiers,
     }
+
+
+@app.get("/skins/<path:filename>")
+def original_skin(filename: str):
+    resp = send_from_directory(SKIN_DIR, filename)
+    resp.headers["Access-Control-Allow-Origin"] = "*"
+    return resp
 
 
 @app.get("/api/players")
