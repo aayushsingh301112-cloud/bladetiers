@@ -22,10 +22,9 @@ export function PlayerRow({ player, rank }: { player: Player; rank: number }) {
         >
           {rank}.
         </span>
-        {player.skinTexture || player.skin ? (
+        {player.skin ? (
           <MinecraftPlayer
-            skinUrl={player.skinTexture}
-            fallbackUrl={player.skin}
+            skinUrl={player.skin}
             name={player.name}
             className="ml-2 h-[4.25rem] w-auto -translate-y-0.5 object-contain"
           />
