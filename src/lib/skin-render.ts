@@ -57,21 +57,26 @@ export function renderSkin(skinUrl: string): Promise<string> {
   const existing = inflight.get(skinUrl);
   if (existing) return existing;
 
-  const job = (async () => {
-    const viewer = await getViewer();
-    await viewer.loadSkin(skinUrl, { model: "auto-detect" });
-    // Stable, slightly-turned "ready" pose — no animation, no autorotation.
-    viewer.playerObject.rotation.y = Math.PI / 7;
-    viewer.playerObject.rotation.x = 0;
-    viewer.render();
-    const url = viewer.canvas.toDataURL("image/png");
-    cache.set(skinUrl, url);
-    inflight.delete(skinUrl);
-    return url;
-  })().catch((err) => {
-    inflight.delete(skinUrl);
-    throw err;
-  });
+  // Serialize renders: one shared viewer can only hold one skin at a time.
+  const job = queue
+    .catch(() => undefined)
+    .then(async () => {
+      const viewer = await getViewer();
+      await viewer.loadSkin(skinUrl, { model: "auto-detect" });
+      // Stable, slightly-turned "ready" pose — no animation, no autorotation.
+      viewer.playerObject.rotation.y = Math.PI / 7;
+      viewer.playerObject.rotation.x = 0;
+      viewer.render();
+      const url = viewer.canvas.toDataURL("image/png");
+      cache.set(skinUrl, url);
+      inflight.delete(skinUrl);
+      return url;
+    })
+    .catch((err) => {
+      inflight.delete(skinUrl);
+      throw err;
+    });
+  queue = job.catch(() => undefined);
 
   inflight.set(skinUrl, job);
   return job;
