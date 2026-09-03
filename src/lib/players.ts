@@ -12,6 +12,8 @@ export type Player = {
   region: string | null;
   /** absolute or root-relative URL of the website-ready (transparent) skin render */
   skin: string | null;
+  /** raw uploaded Minecraft skin texture (64x64/64x32) used for 3D rendering */
+  skinTexture: string | null;
   /** overall points, optional */
   points: number | null;
   /** combat title, e.g. "Combat Grandmaster" — optional */
