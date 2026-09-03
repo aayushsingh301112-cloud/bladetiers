@@ -30,12 +30,11 @@ export const Route = createFileRoute("/api/public/players")({
           if (!res.ok) throw new Error(`upstream ${res.status}`);
 
           const players = sortPlayers(normalizePlayers(await res.json())).map((p) => {
-            const texture = absolutize(p.skinTexture, upstream);
             return {
               ...p,
               skin: absolutize(p.skin, upstream),
-              // Served same-origin so the 3D renderer can read the canvas back.
-              skinTexture: texture ? `/api/public/skin?u=${encodeURIComponent(texture)}` : null,
+              // Absolute URL to the original uploaded skin (CORS-enabled upstream).
+              skinTexture: absolutize(p.skinTexture, upstream),
             };
           });
 
