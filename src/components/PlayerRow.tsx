@@ -1,5 +1,6 @@
 import { Award } from "lucide-react";
 
+import { MinecraftPlayer } from "@/components/MinecraftPlayer";
 import { RANKED_KITS } from "@/lib/kits";
 import type { Player } from "@/lib/players";
 
