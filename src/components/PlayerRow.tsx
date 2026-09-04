@@ -26,7 +26,7 @@ export function PlayerRow({ player, rank }: { player: Player; rank: number }) {
           <MinecraftPlayer
             skinUrl={player.skin}
             name={player.name}
-            className="h-28 w-auto object-contain"
+            className="h-32 w-auto object-contain"
           />
         ) : null}
       </div>
