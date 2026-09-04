@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { Leaderboard } from "@/components/Leaderboard";
-import { KITS } from "@/lib/kits";
+import { KITS, KitIcon } from "@/lib/kits";
 
 export function KitTabs() {
   const [active, setActive] = useState("overall");
@@ -9,24 +9,20 @@ export function KitTabs() {
   return (
     <section className="mx-auto max-w-7xl px-4">
       <div className="flex flex-wrap gap-1">
-        {KITS.map(({ key, label, icon: Icon, color, filled }) => {
-          const isActive = key === active;
+        {KITS.map((kit) => {
+          const isActive = kit.key === active;
           return (
             <button
-              key={key}
-              onClick={() => setActive(key)}
+              key={kit.key}
+              onClick={() => setActive(kit.key)}
               className={`relative flex min-w-[6.5rem] flex-col items-center gap-1.5 rounded-t-xl border border-b-0 px-4 py-3 transition-colors ${
                 isActive
                   ? "border-border bg-card text-foreground"
                   : "border-transparent bg-card/40 text-muted-foreground hover:text-foreground"
               }`}
             >
-              <Icon
-                className={`h-5 w-5 ${color} ${isActive ? "" : "opacity-80"}`}
-                strokeWidth={2.25}
-                fill={filled ? "currentColor" : "none"}
-              />
-              <span className="text-sm font-semibold">{label}</span>
+              <KitIcon kit={kit} className="h-6 w-6" active={isActive} />
+              <span className="text-sm font-semibold">{kit.label}</span>
               {isActive ? (
                 <span className="absolute inset-x-4 bottom-0 h-0.5 rounded-full bg-foreground" />
               ) : null}
