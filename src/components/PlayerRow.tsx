@@ -14,10 +14,10 @@ export function PlayerRow({ player, rank }: { player: Player; rank: number }) {
 
   return (
     <div className="flex items-center gap-4 rounded-xl border border-border bg-card/70 px-3 py-2 transition-colors hover:bg-card">
-      {/* rank + skin plate */}
-      <div className="relative flex h-14 w-40 shrink-0 items-center overflow-hidden rounded-lg bg-kit-gold/90">
+      {/* rank + model */}
+      <div className="relative flex h-14 w-40 shrink-0 items-center justify-center">
         <span
-          className="pl-3 text-2xl font-black italic text-background"
+          className="absolute left-0 pl-3 text-2xl font-black italic text-kit-gold"
           style={{ fontStyle: "italic" }}
         >
           {rank}.
@@ -26,13 +26,9 @@ export function PlayerRow({ player, rank }: { player: Player; rank: number }) {
           <MinecraftPlayer
             skinUrl={player.skin}
             name={player.name}
-            className="ml-2 h-[4.25rem] w-auto -translate-y-0.5 object-contain"
+            className="h-20 w-auto object-contain"
           />
         ) : null}
-        <span
-          className="absolute inset-y-0 right-0 w-8 bg-card"
-          style={{ clipPath: "polygon(100% 0, 100% 100%, 0 100%)" }}
-        />
       </div>
 
       {/* identity */}
@@ -52,9 +48,7 @@ export function PlayerRow({ player, rank }: { player: Player; rank: number }) {
       {/* region */}
       <div className="w-16 shrink-0 text-center">
         {player.region ? (
-          <span className="inline-flex items-center justify-center rounded-md bg-primary/20 px-2.5 py-1 text-sm font-bold text-primary">
-            {player.region}
-          </span>
+          <span className="text-sm font-bold text-muted-foreground">{player.region}</span>
         ) : null}
       </div>
 
