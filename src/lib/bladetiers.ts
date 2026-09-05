@@ -1,0 +1,122 @@
+// Blade Tiers API client — talks directly to the public rankings API.
+export const BASE_URL = "https://api.ticknodes.dpdns.org";
+
+export const TIER_POINTS: Record<string, number> = {
+  HT1: 60,
+  LT1: 50,
+  HT2: 40,
+  LT2: 30,
+  HT3: 20,
+  LT3: 15,
+  HT4: 10,
+  LT4: 8,
+  HT5: 5,
+  LT5: 3,
+};
+
+export type Player = {
+  name: string;
+  region?: string | null;
+  skin?: string | null;
+  discord_id?: string | null;
+  tiers: Record<string, string>;
+  points: number;
+  title: string;
+};
+
+export type Gamemode = { id: string; name: string; icon: string };
+
+const icon = (n: string) => `/assets/tier_icons/${n}.svg`;
+
+export const DISPLAY_GAMEMODES: Gamemode[] = [
+  { id: "overall", name: "Overall", icon: icon("overall") },
+  { id: "ltm", name: "LTMs", icon: icon("2v2") },
+  { id: "vanilla", name: "Vanilla", icon: icon("vanilla") },
+  { id: "uhc", name: "UHC", icon: icon("uhc") },
+  { id: "pot", name: "Pot", icon: icon("pot") },
+  { id: "nethop", name: "NethOP", icon: icon("nethop") },
+  { id: "smp", name: "SMP", icon: icon("smp") },
+  { id: "sword", name: "Sword", icon: icon("sword") },
+  { id: "axe", name: "Axe", icon: icon("axe") },
+  { id: "mace", name: "Mace", icon: icon("mace") },
+];
+
+export const MATRIX_GAMEMODES: Gamemode[] = [
+  { id: "mace", name: "Mace", icon: icon("mace") },
+  { id: "sword", name: "Sword", icon: icon("sword") },
+  { id: "nethop", name: "NethOP", icon: icon("nethop") },
+  { id: "nethpot", name: "NethPot", icon: icon("pot") },
+  { id: "axe", name: "Axe", icon: icon("axe") },
+  { id: "uhc", name: "UHC", icon: icon("uhc") },
+  { id: "smp", name: "SMP", icon: icon("smp") },
+  { id: "vanilla", name: "Vanilla", icon: icon("vanilla") },
+];
+
+export const DISCORD_INVITE = "https://discord.gg/QxDVbSYQkT";
+export const SERVER_IP = "chocomc.net";
+
+export function calculatePlayerPoints(tiers: Record<string, string> = {}): number {
+  let total = 0;
+  for (const code of Object.values(tiers)) {
+    if (typeof code === "string") total += TIER_POINTS[code.toUpperCase().trim()] ?? 0;
+  }
+  return total;
+}
+
+export function getCombatTitle(points: number): string {
+  if (points >= 300) return "Combat Grandmaster";
+  if (points >= 150) return "Combat Master";
+  if (points >= 70) return "Combat Ace";
+  if (points >= 30) return "Combat Veteran";
+  if (points >= 1) return "Combatant";
+  return "Unranked";
+}
+
+export function getTierLevel(tierCode?: string | null): number {
+  if (!tierCode) return 99;
+  const match = tierCode.match(/([HL]T)?(\d)/i);
+  if (!match) return 99;
+  const pos = (match[1] ?? "").toUpperCase() === "HT" ? 0 : 1;
+  return parseInt(match[2]!, 10) * 10 + pos;
+}
+
+export const REGION_NAMES: Record<string, string> = {
+  NA: "North America",
+  SA: "South America",
+  EU: "Europe",
+  AS: "Asia",
+  AU: "Australia",
+  ME: "Middle East",
+};
+
+export function skinUrl(path?: string | null): string | null {
+  if (!path) return null;
+  if (path.startsWith("http://") || path.startsWith("https://")) return path;
+  return `${BASE_URL}${path.startsWith("/") ? path : `/${path}`}`;
+}
+
+export async function getPlayers(): Promise<Player[]> {
+  const res = await fetch(`${BASE_URL}/api/players`, { headers: { Accept: "application/json" } });
+  if (!res.ok) throw new Error(`API returned status ${res.status}`);
+  const raw = (await res.json()) as unknown;
+  const list = Array.isArray(raw) ? raw : [];
+
+  return list
+    .map((p) => {
+      const player = p as Record<string, unknown>;
+      const tiers = (player["tiers"] as Record<string, string>) ?? {};
+      const points = calculatePlayerPoints(tiers);
+      return {
+        ...(player as object),
+        name: String(player["name"] ?? ""),
+        region: (player["region"] as string) ?? null,
+        skin: (player["skin"] as string) ?? null,
+        discord_id: (player["discord_id"] as string) ?? null,
+        tiers,
+        points,
+        title: getCombatTitle(points),
+      } as Player;
+    })
+    .filter((p) => p.name)
+    .sort((a, b) => b.points - a.points);
+}

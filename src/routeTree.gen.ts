@@ -10,53 +10,33 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ApiPublicPlayersRouteImport } from './routes/api/public/players'
-import { Route as ApiPublicSkinRouteImport } from './routes/api/public/skin'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiPublicPlayersRoute = ApiPublicPlayersRouteImport.update({
-  id: '/api/public/players',
-  path: '/api/public/players',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiPublicSkinRoute = ApiPublicSkinRouteImport.update({
-  id: '/api/public/skin',
-  path: '/api/public/skin',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/api/public/players': typeof ApiPublicPlayersRoute
-  '/api/public/skin': typeof ApiPublicSkinRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/api/public/players': typeof ApiPublicPlayersRoute
-  '/api/public/skin': typeof ApiPublicSkinRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/api/public/players': typeof ApiPublicPlayersRoute
-  '/api/public/skin': typeof ApiPublicSkinRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/public/players' | '/api/public/skin'
+  fullPaths: '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/public/players' | '/api/public/skin'
-  id: '__root__' | '/' | '/api/public/players' | '/api/public/skin'
+  to: '/'
+  id: '__root__' | '/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ApiPublicPlayersRoute: typeof ApiPublicPlayersRoute
-  ApiPublicSkinRoute: typeof ApiPublicSkinRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -68,27 +48,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/players': {
-      id: '/api/public/players'
-      path: '/api/public/players'
-      fullPath: '/api/public/players'
-      preLoaderRoute: typeof ApiPublicPlayersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/skin': {
-      id: '/api/public/skin'
-      path: '/api/public/skin'
-      fullPath: '/api/public/skin'
-      preLoaderRoute: typeof ApiPublicSkinRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ApiPublicPlayersRoute: ApiPublicPlayersRoute,
-  ApiPublicSkinRoute: ApiPublicSkinRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
