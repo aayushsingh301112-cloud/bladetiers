@@ -20,7 +20,15 @@ function tierDigit(tier?: string | null) {
   return m ? m[1]! : null;
 }
 
-function TierCell({ icon, name, tier }: { icon: string; name: string; tier?: string | null }) {
+function TierCell({
+  icon,
+  name,
+  tier,
+}: {
+  icon: string;
+  name: string;
+  tier: string | null | undefined;
+}) {
   const level = tierDigit(tier);
   return (
     <div className="gamemode-tier-col" title={`${name}: ${tier ? tier.toUpperCase() : "-"}`}>
