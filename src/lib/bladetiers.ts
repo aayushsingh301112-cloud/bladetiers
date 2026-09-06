@@ -1,5 +1,7 @@
-// Blade Tiers API client — talks directly to the public rankings API.
-export const BASE_URL = "http://hopper.proxy.rlwy.net:46859";
+// Browser requests stay on the website's HTTPS origin. Server routes securely
+// relay the Railway API and its skin files without changing their data shape.
+export const PLAYERS_API_URL = "/api/public/players";
+export const SKIN_PROXY_URL = "/api/public/skin";
 
 export const TIER_POINTS: Record<string, number> = {
   HT1: 60,
@@ -18,6 +20,7 @@ export type Player = {
   name: string;
   region?: string | null;
   skin?: string | null;
+  skin_original?: string | null;
   discord_id?: string | null;
   tiers: Record<string, string>;
   points: number;
@@ -91,12 +94,18 @@ export const REGION_NAMES: Record<string, string> = {
 
 export function skinUrl(path?: string | null): string | null {
   if (!path) return null;
-  if (path.startsWith("http://") || path.startsWith("https://")) return path;
-  return `${BASE_URL}${path.startsWith("/") ? path : `/${path}`}`;
+  let upstreamPath = path;
+  try {
+    const url = new URL(path);
+    upstreamPath = `${url.pathname}${url.search}`;
+  } catch {
+    upstreamPath = path.startsWith("/") ? path : `/${path}`;
+  }
+  return `${SKIN_PROXY_URL}?path=${encodeURIComponent(upstreamPath)}`;
 }
 
 export async function getPlayers(): Promise<Player[]> {
-  const res = await fetch(`${BASE_URL}/api/players`, { headers: { Accept: "application/json" } });
+  const res = await fetch(PLAYERS_API_URL, { headers: { Accept: "application/json" } });
   if (!res.ok) throw new Error(`API returned status ${res.status}`);
   const raw = (await res.json()) as unknown;
   const list = Array.isArray(raw) ? raw : [];
@@ -111,6 +120,7 @@ export async function getPlayers(): Promise<Player[]> {
         name: String(player["name"] ?? ""),
         region: (player["region"] as string) ?? null,
         skin: (player["skin"] as string) ?? null,
+        skin_original: (player["skin_original"] as string) ?? null,
         discord_id: (player["discord_id"] as string) ?? null,
         tiers,
         points,
