@@ -1,5 +1,5 @@
 // Blade Tiers API client — talks directly to the public rankings API.
-export const BASE_URL = "https://api.ticknodes.dpdns.org";
+export const BASE_URL = "http://hopper.proxy.rlwy.net:46859";
 
 export const TIER_POINTS: Record<string, number> = {
   HT1: 60,
