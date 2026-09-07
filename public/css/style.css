@@ -635,7 +635,7 @@ body {
   border-radius: 1px;
 }
 
-/* Region Pill */
+/* Region Badge */
 .region-pill-box {
   width: 90px;
   display: flex;
@@ -643,23 +643,43 @@ body {
   justify-content: center;
   flex-shrink: 0;
 }
-.region-badge-pill,
-.region-badge-pill.reg-AS,
-.region-badge-pill.reg-NA,
-.region-badge-pill.reg-EU,
-.region-badge-pill.reg-SA,
-.region-badge-pill.reg-AU,
-.region-badge-pill.reg-ME,
-.region-badge-pill.reg-DEFAULT {
-  font-size: 0.78rem;
-  font-weight: 700;
-  padding: 0.3rem 0.9rem;
-  border-radius: 999px;
+.region-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 42px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  padding: 0.35rem 0.65rem;
+  border-radius: 8px;
   text-align: center;
-  letter-spacing: 0.05em;
-  background: rgba(52, 199, 89, 0.14);
-  border: 1px solid rgba(52, 199, 89, 0.4);
+  letter-spacing: 0.04em;
+  background: rgba(120, 120, 130, 0.16);
+  color: var(--text-muted);
+}
+.region-badge-pill.reg-NA {
+  background: rgba(244, 63, 94, 0.22);
+  color: #fb7185;
+}
+.region-badge-pill.reg-EU {
+  background: rgba(52, 199, 89, 0.18);
   color: #7ee2a8;
+}
+.region-badge-pill.reg-AS {
+  background: rgba(59, 130, 246, 0.18);
+  color: #93c5fd;
+}
+.region-badge-pill.reg-SA {
+  background: rgba(234, 179, 8, 0.18);
+  color: #fde047;
+}
+.region-badge-pill.reg-AU {
+  background: rgba(168, 85, 247, 0.18);
+  color: #d8b4fe;
+}
+.region-badge-pill.reg-ME {
+  background: rgba(249, 115, 22, 0.18);
+  color: #fdba74;
 }
 
 /* Tiers Row (Right side of ranking card) */
