@@ -7,6 +7,7 @@ import {
   MATRIX_GAMEMODES,
   REGION_NAMES,
   SERVER_IP,
+  getCombatTitle,
   getPlayers,
   getTierLevel,
   skinUrl,
@@ -133,6 +134,7 @@ function PlayerModal({
   onClose: () => void;
 }) {
   const region = player.region?.toUpperCase() ?? "??";
+  const combatTitle = getCombatTitle(player.points);
   const tiers = MATRIX_GAMEMODES.map((m) => ({
     ...m,
     tier: player.tiers[m.id] ?? (m.id === "nethpot" ? player.tiers["pot"] : undefined),
@@ -154,7 +156,14 @@ function PlayerModal({
             />
           </div>
           <h2 className="bt-profile-name">{player.name}</h2>
-          <span className="bt-profile-title">◆ {player.title}</span>
+          <span className={`bt-profile-title combat-title-${combatTitle.className}`}>
+            {combatTitle.icon ? (
+              <img className="combat-title-icon" src={combatTitle.icon} alt="" />
+            ) : (
+              <span className="combat-master-mark" aria-hidden="true">◇</span>
+            )}
+            {combatTitle.name}
+          </span>
           <span className="bt-profile-region">{REGION_NAMES[region] ?? region}</span>
         </div>
 
@@ -345,6 +354,7 @@ export function BladeApp() {
               {visible.map((player, idx) => {
                 const rank = idx + 1;
                 const reg = player.region?.toUpperCase() ?? "??";
+                const combatTitle = getCombatTitle(player.points);
                 return (
                   <div
                     key={player.name}
@@ -377,9 +387,13 @@ export function BladeApp() {
                     <div className="player-info-box">
                       <span className="player-name-text">{player.name}</span>
                       <div className="player-subtitle-row">
-                        <span className="combat-rank-symbol">◆</span>
+                        {combatTitle.icon ? (
+                          <img className="combat-rank-icon" src={combatTitle.icon} alt="" />
+                        ) : (
+                          <span className="combat-master-mark" aria-hidden="true">◇</span>
+                        )}
                         <span>
-                          {player.title} ({player.points} points)
+                          {combatTitle.name} ({player.points} points)
                         </span>
                       </div>
                     </div>
