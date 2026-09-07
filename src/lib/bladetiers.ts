@@ -1,3 +1,10 @@
+import combatAceAsset from "@/assets/achievement_titles/combat-ace.webp.asset.json";
+import combatCadetAsset from "@/assets/achievement_titles/combat-cadet.svg.asset.json";
+import combatGrandmasterAsset from "@/assets/achievement_titles/combat-grandmaster.webp.asset.json";
+import combatNoviceAsset from "@/assets/achievement_titles/combat-novice.svg.asset.json";
+import combatSpecialistAsset from "@/assets/achievement_titles/combat-specialist.svg.asset.json";
+import rookieAsset from "@/assets/achievement_titles/rookie.svg.asset.json";
+
 // Browser requests stay on the website's HTTPS origin. Server routes securely
 // relay the Railway API and its skin files without changing their data shape.
 export const PLAYERS_API_URL = "/api/public/players";
@@ -28,6 +35,12 @@ export type Player = {
 };
 
 export type Gamemode = { id: string; name: string; icon: string };
+
+export type CombatTitle = {
+  name: string;
+  icon: string | null;
+  className: string;
+};
 
 const icon = (n: string) => `/assets/tier_icons/${n}.svg`;
 
@@ -66,13 +79,14 @@ export function calculatePlayerPoints(tiers: Record<string, string> = {}): numbe
   return total;
 }
 
-export function getCombatTitle(points: number): string {
-  if (points >= 300) return "Combat Grandmaster";
-  if (points >= 150) return "Combat Master";
-  if (points >= 70) return "Combat Ace";
-  if (points >= 30) return "Combat Veteran";
-  if (points >= 1) return "Combatant";
-  return "Unranked";
+export function getCombatTitle(points: number): CombatTitle {
+  if (points >= 400) return { name: "Combat Grandmaster", icon: combatGrandmasterAsset.url, className: "grandmaster" };
+  if (points >= 250) return { name: "Combat Master", icon: null, className: "master" };
+  if (points >= 100) return { name: "Combat Ace", icon: combatAceAsset.url, className: "ace" };
+  if (points >= 50) return { name: "Combat Specialist", icon: combatSpecialistAsset.url, className: "specialist" };
+  if (points >= 20) return { name: "Combat Cadet", icon: combatCadetAsset.url, className: "cadet" };
+  if (points >= 10) return { name: "Combat Novice", icon: combatNoviceAsset.url, className: "novice" };
+  return { name: "Rookie", icon: rookieAsset.url, className: "rookie" };
 }
 
 export function getTierLevel(tierCode?: string | null): number {
@@ -124,7 +138,7 @@ export async function getPlayers(): Promise<Player[]> {
         discord_id: (player["discord_id"] as string) ?? null,
         tiers,
         points,
-        title: getCombatTitle(points),
+        title: getCombatTitle(points).name,
       } as Player;
     })
     .filter((p) => p.name)

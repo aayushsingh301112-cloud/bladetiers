@@ -610,9 +610,29 @@ body {
   color: var(--text-muted);
   line-height: 1.3;
 }
-.combat-rank-symbol {
-  color: #a78bfa;
-  font-size: 0.8rem;
+.combat-rank-icon,
+.combat-title-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+.combat-master-mark {
+  position: relative;
+  width: 0.82rem;
+  height: 0.82rem;
+  flex: 0 0 auto;
+  transform: rotate(45deg);
+  border: 2px solid #f4c430;
+  background: rgba(244, 196, 48, 0.24);
+  border-radius: 2px;
+}
+.combat-master-mark::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: #f4c430;
+  border-radius: 1px;
 }
 
 /* Region Pill */
@@ -978,6 +998,13 @@ body { font-size: 18px; }
   background: rgba(225, 29, 72, 0.18); color: #fb7185;
   border-radius: 999px; padding: 0.35rem 1rem; font-weight: 700; font-size: 1rem;
 }
+.bt-profile-title .combat-title-icon { width: 1.35rem; height: 1.35rem; }
+.bt-profile-title.combat-title-grandmaster,
+.bt-profile-title.combat-title-master { color: #facc15; background: rgba(250, 204, 21, 0.14); }
+.bt-profile-title.combat-title-specialist { color: #c084fc; background: rgba(192, 132, 252, 0.14); }
+.bt-profile-title.combat-title-cadet,
+.bt-profile-title.combat-title-novice { color: #c4b5fd; background: rgba(196, 181, 253, 0.14); }
+.bt-profile-title.combat-title-rookie { color: #aeb4bc; background: rgba(174, 180, 188, 0.12); }
 .bt-profile-region { color: var(--text-dim); font-weight: 700; font-size: 1.05rem; }
 .bt-profile-section {
   font-size: 1.1rem; font-weight: 800; letter-spacing: 0.04em;
