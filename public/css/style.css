@@ -618,10 +618,21 @@ body {
   object-fit: contain;
 }
 .combat-master-mark {
-  color: #f4c430;
-  font-size: 1.2rem;
-  font-weight: 800;
-  line-height: 1;
+  position: relative;
+  width: 0.82rem;
+  height: 0.82rem;
+  flex: 0 0 auto;
+  transform: rotate(45deg);
+  border: 2px solid #f4c430;
+  background: rgba(244, 196, 48, 0.24);
+  border-radius: 2px;
+}
+.combat-master-mark::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: #f4c430;
+  border-radius: 1px;
 }
 
 /* Region Pill */

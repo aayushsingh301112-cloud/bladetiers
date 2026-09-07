@@ -160,7 +160,7 @@ function PlayerModal({
             {combatTitle.icon ? (
               <img className="combat-title-icon" src={combatTitle.icon} alt="" />
             ) : (
-              <span className="combat-master-mark" aria-hidden="true">◇</span>
+              <span className="combat-master-mark" aria-hidden="true" />
             )}
             {combatTitle.name}
           </span>
@@ -390,7 +390,7 @@ export function BladeApp() {
                         {combatTitle.icon ? (
                           <img className="combat-rank-icon" src={combatTitle.icon} alt="" />
                         ) : (
-                          <span className="combat-master-mark" aria-hidden="true">◇</span>
+                          <span className="combat-master-mark" aria-hidden="true" />
                         )}
                         <span>
                           {combatTitle.name} ({player.points} points)
