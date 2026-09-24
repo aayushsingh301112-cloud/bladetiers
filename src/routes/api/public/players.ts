@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-const UPSTREAM_PLAYERS_URL = "http://hopper.proxy.rlwy.net:46859/api/players";
+const UPSTREAM_PLAYERS_URL = "https://api.ticknodes.dpdns.org/api/players";
 
 export const Route = createFileRoute("/api/public/players")({
   server: {
