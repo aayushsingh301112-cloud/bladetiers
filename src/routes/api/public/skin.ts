@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 
-const UPSTREAM_ORIGIN = "http://hopper.proxy.rlwy.net:46859";
+const UPSTREAM_ORIGIN = "https://api.ticknodes.dpdns.org";
 const skinPathSchema = z
   .string()
   .min(1)
