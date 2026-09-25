@@ -40,7 +40,7 @@ export const Route = createFileRoute("/api/public/skin")({
               "Content-Type":
                 upstream.headers.get("content-type") ?? "image/png",
               "Cache-Control":
-                "public, max-age=3600, s-maxage=3600",
+                "no store, no-cache, must-revalidate, proxy-revalidate",
             },
           });
         } catch {
