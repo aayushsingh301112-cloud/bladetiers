@@ -285,7 +285,16 @@ export function BladeApp() {
         </nav>
 
         <div className="rankings-subheader">
-          <div className="filters-bar">
+          <div className="filters-bar filters-right">
+            <a
+              className="discord-icon-btn"
+              href={DISCORD_INVITE}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Join our Discord"
+            >
+              <img src="/assets/nav_icons/discord.svg" alt="Discord" />
+            </a>
             <select
               className="region-select"
               value={region}
