@@ -202,31 +202,24 @@ function InfoModal({ onClose }: { onClose: () => void }) {
         <button className="modal-close" onClick={onClose} aria-label="Close">
           ×
         </button>
-        <div style={{ textAlign: "center", marginBottom: "1.25rem" }}>
-          <img src="/assets/branding/blade_tier_logo.png" alt="Blade Tiers" style={{ height: 48 }} />
-        </div>
-        <p style={{ color: "var(--text-muted)", lineHeight: 1.7 }}>
-          Blade Tiers is the competitive Minecraft PvP tier ranking list for {SERVER_IP}. Players are
-          tested across Mace, Sword, NethOP, Pot, Axe, UHC, SMP and Vanilla. Points come from
-          official tier tests — High Tier (HT) and Low Tier (LT) decide your global standing.
-        </p>
-        <a
-          href={DISCORD_INVITE}
-          target="_blank"
-          rel="noreferrer"
-          className="btn-info"
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "1.5rem",
-            background: "#5865F2",
-            color: "#fff",
-            border: "none",
-            padding: "0.75rem",
-          }}
-        >
-          Join the Discord
-        </a>
+        <h3 className="titles-heading">
+          How to obtain <span>Achievement Titles</span>
+        </h3>
+        <ul className="titles-list">
+          {COMBAT_TITLES.map((t) => (
+            <li key={t.name} className="titles-item">
+              {t.icon ? (
+                <img className="titles-icon" src={t.icon} alt="" />
+              ) : (
+                <span className={`title-badge ${t.className}`} aria-hidden="true" />
+              )}
+              <div>
+                <div className={`titles-name title-${t.className}`}>{t.name}</div>
+                <div className="titles-desc">{t.description}</div>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
@@ -274,7 +267,7 @@ export function BladeApp() {
 
   return (
     <div className="app-container">
-      <Navbar players={players} onOpenPlayer={setOpenPlayer} />
+      <Navbar players={players} onOpenPlayer={setOpenPlayer} onOpenInfo={() => setInfoOpen(true)} />
 
       <main className="rankings-card">
         <nav className="gamemode-tabs">
@@ -291,34 +284,7 @@ export function BladeApp() {
         </nav>
 
         <div className="rankings-subheader">
-          <div className="subheader-left">
-            <button className="btn-info" onClick={() => setInfoOpen(true)}>
-              Information
-            </button>
-          </div>
           <div className="filters-bar">
-            <div className="server-ip-box">
-              <img className="server-logo" src="/assets/branding/blade_tier_icon.webp" alt="" />
-              <div className="server-details">
-                <span className="server-label">Server IP</span>
-                <div className="server-actions">
-                  <span
-                    className="server-ip-badge"
-                    onClick={() => navigator.clipboard?.writeText(SERVER_IP)}
-                  >
-                    {SERVER_IP}
-                  </span>
-                  <a
-                    className="server-discord-btn"
-                    href={DISCORD_INVITE}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <img src="/assets/nav_icons/discord.svg" alt="Discord" width={16} height={16} />
-                  </a>
-                </div>
-              </div>
-            </div>
             <select
               className="region-select"
               value={region}
