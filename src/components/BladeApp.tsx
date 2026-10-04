@@ -46,9 +46,11 @@ function TierCell({
 function Navbar({
   players,
   onOpenPlayer,
+  onOpenInfo,
 }: {
   players: Player[];
   onOpenPlayer: (name: string) => void;
+  onOpenInfo: () => void;
 }) {
   const [query, setQuery] = useState("");
   const matches = query
@@ -69,6 +71,12 @@ function Navbar({
             <img src="/assets/nav_icons/rankings.svg" alt="" />
             <span>Rankings</span>
           </span>
+        </li>
+        <li>
+          <button type="button" className="nav-link nav-link-btn" onClick={onOpenInfo}>
+            <img src="/assets/nav_icons/home-muted.svg" alt="" />
+            <span>Information</span>
+          </button>
         </li>
         <li>
           <a className="nav-link" href={DISCORD_INVITE} target="_blank" rel="noreferrer">
