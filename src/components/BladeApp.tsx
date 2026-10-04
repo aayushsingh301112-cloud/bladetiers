@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import {
+  COMBAT_TITLES,
   DISCORD_INVITE,
   DISPLAY_GAMEMODES,
   MATRIX_GAMEMODES,

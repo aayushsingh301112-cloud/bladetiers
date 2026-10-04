@@ -89,6 +89,16 @@ export function getCombatTitle(points: number): CombatTitle {
   return { name: "Rookie", icon: rookieAsset.url, className: "rookie" };
 }
 
+export const COMBAT_TITLES: (CombatTitle & { description: string })[] = [
+  { name: "Combat Grandmaster", icon: combatGrandmasterAsset.url, className: "grandmaster", description: "Obtained 400+ total points." },
+  { name: "Combat Master", icon: null, className: "master", description: "Obtained 250+ total points." },
+  { name: "Combat Ace", icon: combatAceAsset.url, className: "ace", description: "Obtained 100+ total points." },
+  { name: "Combat Specialist", icon: combatSpecialistAsset.url, className: "specialist", description: "Obtained 50+ total points." },
+  { name: "Combat Cadet", icon: combatCadetAsset.url, className: "cadet", description: "Obtained 20+ total points." },
+  { name: "Combat Novice", icon: combatNoviceAsset.url, className: "novice", description: "Obtained 10+ total points." },
+  { name: "Rookie", icon: rookieAsset.url, className: "rookie", description: "Starting rank for players with less than 10 points." },
+];
+
 export function getTierLevel(tierCode?: string | null): number {
   if (!tierCode) return 99;
   const match = tierCode.match(/([HL]T)?(\d)/i);
