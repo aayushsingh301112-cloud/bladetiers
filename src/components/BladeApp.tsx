@@ -35,7 +35,7 @@ function TierCell({
   return (
     <div className="gamemode-tier-col" title={`${name}: ${tier ? tier.toUpperCase() : "-"}`}>
       <div className={`gamemode-tier-circle ${level ? `circle-tier-${level}` : "circle-unranked"}`}>
-        {tier ? <img src={icon} alt={name} /> : null}
+      {tier ? <img src={icon} alt={name} loading="lazy" decoding="async" /> : null}
       </div>
       <div className={`gamemode-tier-pill ${level ? `pill-tier-${level}` : "pill-unranked"}`}>
         {tier ? tier.toUpperCase() : "-"}
@@ -167,7 +167,7 @@ function PlayerModal({
           <h2 className="bt-profile-name">{player.name}</h2>
           <span className={`bt-profile-title combat-title-${combatTitle.className}`}>
             {combatTitle.icon ? (
-              <img className="combat-title-icon" src={combatTitle.icon} alt="" />
+              <img className="combat-title-icon" src={combatTitle.icon} alt="" loading="lazy" decoding="async" />
             ) : (
               <span className="combat-master-mark" aria-hidden="true" />
             )}
@@ -361,6 +361,7 @@ export function BladeApp() {
                         src={skinUrl(player.skin) ?? FALLBACK_IMG}
                         alt={player.name}
                         loading="lazy"
+                        decoding="async"
                         onError={(e) => {
                           e.currentTarget.src = FALLBACK_IMG;
                           e.currentTarget.style.opacity = "0.25";
@@ -372,7 +373,7 @@ export function BladeApp() {
                       <span className="player-name-text">{player.name}</span>
                       <div className="player-subtitle-row">
                         {combatTitle.icon ? (
-                          <img className="combat-rank-icon" src={combatTitle.icon} alt="" />
+                          <img className="combat-rank-icon" src={combatTitle.icon} alt="" loading="lazy" decoding="async" />
                         ) : (
                           <span className="combat-master-mark" aria-hidden="true" />
                         )}
