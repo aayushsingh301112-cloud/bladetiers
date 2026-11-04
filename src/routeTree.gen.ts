@@ -10,12 +10,24 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as OverviewRouteImport } from './routes/overview'
+import { Route as TestersRouteImport } from './routes/testers'
 import { Route as ApiPublicPlayersRouteImport } from './routes/api/public/players'
 import { Route as ApiPublicSkinRouteImport } from './routes/api/public/skin'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OverviewRoute = OverviewRouteImport.update({
+  id: '/overview',
+  path: '/overview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TestersRoute = TestersRouteImport.update({
+  id: '/testers',
+  path: '/testers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicPlayersRoute = ApiPublicPlayersRouteImport.update({
@@ -31,30 +43,46 @@ const ApiPublicSkinRoute = ApiPublicSkinRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/overview': typeof OverviewRoute
+  '/testers': typeof TestersRoute
   '/api/public/players': typeof ApiPublicPlayersRoute
   '/api/public/skin': typeof ApiPublicSkinRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/overview': typeof OverviewRoute
+  '/testers': typeof TestersRoute
   '/api/public/players': typeof ApiPublicPlayersRoute
   '/api/public/skin': typeof ApiPublicSkinRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/overview': typeof OverviewRoute
+  '/testers': typeof TestersRoute
   '/api/public/players': typeof ApiPublicPlayersRoute
   '/api/public/skin': typeof ApiPublicSkinRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/public/players' | '/api/public/skin'
+  fullPaths:
+    '/' | '/overview' | '/testers' | '/api/public/players' | '/api/public/skin'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/public/players' | '/api/public/skin'
-  id: '__root__' | '/' | '/api/public/players' | '/api/public/skin'
+  to:
+    '/' | '/overview' | '/testers' | '/api/public/players' | '/api/public/skin'
+  id:
+    | '__root__'
+    | '/'
+    | '/overview'
+    | '/testers'
+    | '/api/public/players'
+    | '/api/public/skin'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  OverviewRoute: typeof OverviewRoute
+  TestersRoute: typeof TestersRoute
   ApiPublicPlayersRoute: typeof ApiPublicPlayersRoute
   ApiPublicSkinRoute: typeof ApiPublicSkinRoute
 }
@@ -66,6 +94,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/overview': {
+      id: '/overview'
+      path: '/overview'
+      fullPath: '/overview'
+      preLoaderRoute: typeof OverviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/testers': {
+      id: '/testers'
+      path: '/testers'
+      fullPath: '/testers'
+      preLoaderRoute: typeof TestersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/players': {
@@ -87,6 +129,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  OverviewRoute: OverviewRoute,
+  TestersRoute: TestersRoute,
   ApiPublicPlayersRoute: ApiPublicPlayersRoute,
   ApiPublicSkinRoute: ApiPublicSkinRoute,
 }

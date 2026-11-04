@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
 
 import {
   COMBAT_TITLES,
@@ -72,6 +73,18 @@ function Navbar({
             <img src="/assets/nav_icons/rankings.svg" alt="" />
             <span>Rankings</span>
           </span>
+        </li>
+        <li>
+          <Link to="/testers" className="nav-link">
+            <img src="/assets/nav_icons/rankings.svg" alt="" />
+            <span>Testers</span>
+          </Link>
+        </li>
+        <li>
+          <Link to="/overview" className="nav-link">
+            <img src="/assets/nav_icons/home-muted.svg" alt="" />
+            <span>Overview</span>
+          </Link>
         </li>
         <li>
           <button type="button" className="nav-link nav-link-btn" onClick={onOpenInfo}>
