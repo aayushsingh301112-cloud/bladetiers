@@ -137,7 +137,11 @@ export async function getPlayers(): Promise<Player[]> {
   return list
     .map((p) => {
       const player = p as Record<string, unknown>;
-      const tiers = (player["tiers"] as Record<string, string>) ?? {};
+      const tiers = Object.fromEntries(
+        Object.entries((player["tiers"] as Record<string, string>) ?? {}).filter(
+          ([, v]) => typeof v === "string" && v.trim() !== "" && v.trim().toUpperCase() !== "UNRANKED",
+        ),
+      ) as Record<string, string>;
       const points = calculatePlayerPoints(tiers);
       return {
         ...(player as object),
