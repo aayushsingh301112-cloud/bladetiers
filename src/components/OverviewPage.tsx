@@ -4,12 +4,11 @@ import { Link } from "@tanstack/react-router";
 import { SiteNav } from "@/components/SiteNav";
 import {
   DISCORD_INVITE,
-  FALLBACK,
   MATRIX_GAMEMODES,
   REGION_NAMES,
   getPlayers,
   skinUrl,
-} from "@/lib/blade-pages";
+} from "@/lib/bladetiers";
 
 const FALLBACK_IMG = "/assets/branding/blade_tier_icon.webp";
 
