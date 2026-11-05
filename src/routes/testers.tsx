@@ -9,7 +9,7 @@ export const Route = createFileRoute("/testers")({
       {
         name: "description",
         content:
-          "The testing staff behind Blade Tiers: who runs the tier tests and assigns tiers on chocomc.net.",
+          "The testing staff behind Blade Tiers: who runs the tier tests and assigns every tier on the leaderboard.",
       },
       { property: "og:title", content: "Blade Tiers — Testers" },
       {
