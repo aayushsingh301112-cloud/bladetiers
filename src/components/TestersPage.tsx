@@ -1,10 +1,10 @@
-import { SiteNav } from "@/components/SiteNav";
+import { HomeNav } from "@/components/HomeNav";
 import { DISCORD_INVITE } from "@/lib/bladetiers";
 
 export function TestersPage() {
   return (
     <div className="app-container">
-      <SiteNav active="testers" />
+      <HomeNav active="testers" />
 
       <main className="testers-main">
         <section className="rankings-card testers-card">
@@ -31,7 +31,7 @@ export function TestersPage() {
       </main>
 
       <footer>
-        <div>Copyrights © Blade Tiers 2026 • Minecraft PvP Leaderboard for chocomc.net</div>
+        <div>Copyrights © Blade Tiers 2026 • Minecraft PvP Tierlist</div>
       </footer>
     </div>
   );

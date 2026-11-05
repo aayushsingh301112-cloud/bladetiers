@@ -1,14 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 
-import { SiteNav } from "@/components/SiteNav";
-import {
-  DISCORD_INVITE,
-  MATRIX_GAMEMODES,
-  REGION_NAMES,
-  getPlayers,
-  skinUrl,
-} from "@/lib/bladetiers";
+import { HomeNav } from "@/components/HomeNav";
+import { DISCORD_INVITE, MATRIX_GAMEMODES, getPlayers, skinUrl } from "@/lib/bladetiers";
 
 const FALLBACK_IMG = "/assets/branding/blade_tier_icon.webp";
 
@@ -20,11 +14,9 @@ function tierDigit(tier?: string | null) {
 function TopPlayerRow({
   player,
   rank,
-  onOpen,
 }: {
   player: { name: string; points: number; region?: string | null; skin?: string | null; tiers: Record<string, string> };
   rank: number;
-  onOpen?: () => void;
 }) {
   const reg = player.region?.toUpperCase() ?? "??";
   const pills = MATRIX_GAMEMODES.map((m) => ({ id: m.id, name: m.name, tier: player.tiers[m.id] }))
@@ -32,7 +24,7 @@ function TopPlayerRow({
     .slice(0, 3);
 
   return (
-    <div className="top-player-row" onClick={onOpen}>
+    <Link to="/" className="top-player-row">
       <div className={`top-rank ${rank <= 3 ? `top-rank-${rank}` : ""}`}>
         <span>{rank}</span>
       </div>
@@ -47,7 +39,7 @@ function TopPlayerRow({
       <div className="top-player-info">
         <div className="top-player-name">{player.name}</div>
         <div className="top-player-meta">
-          {player.points} pts • {REGION_NAMES[reg] ?? reg}
+          {player.points} pts • {reg}
         </div>
       </div>
       <div className="top-player-pills">
@@ -60,29 +52,11 @@ function TopPlayerRow({
           );
         })}
       </div>
-    </div>
+    </Link>
   );
 }
 
-const FEATURES = [
-  {
-    icon: "/assets/nav_icons/discord.svg",
-    title: "Get Tested",
-    text: "Join the Discord and book a tier test. You'll fight ranked 1v1s on chocomc.net against a tester.",
-  },
-  {
-    icon: "/assets/tier_icons/sword.svg",
-    title: "Earn Your Tier",
-    text: "Our testers grade every fight and assign a tier per kit — from LT5 all the way up to HT1.",
-  },
-  {
-    icon: "/assets/tier_icons/overall.svg",
-    title: "Climb the Board",
-    text: "Every tier earns points. Stack them across kits, build your total and climb the global leaderboard.",
-  },
-];
-
-export function OverviewPage() {
+export function HomePage() {
   const { data } = useQuery({
     queryKey: ["blade-players"],
     queryFn: getPlayers,
@@ -98,10 +72,10 @@ export function OverviewPage() {
   const regions = new Set(players.map((p) => p.region?.toUpperCase()).filter(Boolean)).size;
 
   return (
-    <div className="app-container">
-      <SiteNav active="overview" />
+    <div className="app-container home-container">
+      <HomeNav active="home" />
 
-      <main className="overview-main">
+      <main className="home-main">
         <section className="hero-grid">
           <div className="hero-copy">
             <div className="hero-badge-row">
@@ -112,16 +86,18 @@ export function OverviewPage() {
               </span>
             </div>
             <h1 className="hero-title">
-              The <span className="gold">#1 Cracked</span> &amp; Premium Tierlist
+              The <span className="gold">#1 Cracked</span>
+              <br />
+              &amp; Premium Tierlist
             </h1>
             <p className="hero-sub">
-              Blade Tiers ranks the best Minecraft PvP players on chocomc.net. Compete in ranked 1v1s,
-              get tested by top players and claim your spot on the global leaderboard.
+              Compete in ranked 1v1s. Get tested by top players. Claim your spot on the global
+              leaderboard.
             </p>
             <div className="hero-cta">
               <Link to="/" className="hero-btn hero-btn-primary">
                 <img src="/assets/tier_icons/overall.svg" alt="" />
-                View Rankings
+                View Tier List
               </Link>
               <a className="hero-btn hero-btn-ghost" href={DISCORD_INVITE} target="_blank" rel="noreferrer">
                 <img src="/assets/nav_icons/discord.svg" alt="" />
@@ -131,11 +107,11 @@ export function OverviewPage() {
             <div className="hero-stats">
               <div className="hero-stat">
                 <div className="hero-stat-value">{players.length.toLocaleString()}</div>
-                <div className="hero-stat-label">Players ranked</div>
+                <div className="hero-stat-label">Players Ranked</div>
               </div>
               <div className="hero-stat">
                 <div className="hero-stat-value">{tiersAssigned.toLocaleString()}</div>
-                <div className="hero-stat-label">Tiers assigned</div>
+                <div className="hero-stat-label">Tiers Assigned</div>
               </div>
               <div className="hero-stat">
                 <div className="hero-stat-value">{regions || "—"}</div>
@@ -168,25 +144,10 @@ export function OverviewPage() {
             )}
           </aside>
         </section>
-
-        <section className="feature-section">
-          <h2 className="section-heading">
-            What is <span className="gold">Blade Tiers</span>?
-          </h2>
-          <div className="feature-grid">
-            {FEATURES.map((f) => (
-              <div key={f.title} className="feature-card">
-                <img className="feature-icon" src={f.icon} alt="" loading="lazy" decoding="async" />
-                <div className="feature-title">{f.title}</div>
-                <p className="feature-text">{f.text}</p>
-              </div>
-            ))}
-          </div>
-        </section>
       </main>
 
       <footer>
-        <div>Copyrights © Blade Tiers 2026 • Minecraft PvP Leaderboard for chocomc.net</div>
+        <div>Copyrights © Blade Tiers 2026 • Minecraft PvP Tierlist</div>
       </footer>
     </div>
   );
